@@ -1,10 +1,14 @@
 const util = require("util");
 const multer = require("multer");
 const { v4: uuidv4 } = require('uuid');
-const maxSize = 2 * 1024 * 1024;
+//filesize cannot be greater than 10MB
+const maxSize = 10 * 1024 * 1024;
+const DIR = '/uploads/';
+const fs = require('fs')
+
 let storage = multer.diskStorage({
   destination: (_req, _file, cb) => {
-    cb(null, __basedir + "/uploads/");
+    cb(null, __basedir + `${DIR}`);
   },
   filename: (req, file, cb) => {    
     console.log(file.originalname);
@@ -17,6 +21,8 @@ let uploadFile = multer({
   limits: { fileSize: maxSize },
 }).single("file");
 
+exports.deleteUpload = (imagename) => {
+  fs.unlinkSync(__basedir + DIR + imagename);
+}
 
-let uploadFileMiddleware = util.promisify(uploadFile);
-module.exports = uploadFileMiddleware;
+exports.uploadFileMiddleware = util.promisify(uploadFile);

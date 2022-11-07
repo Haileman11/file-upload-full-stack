@@ -9,6 +9,16 @@ var corsOptions = {
 app.use(cors(corsOptions));
 const initRoutes = require("./src/routes");
 app.use(express.urlencoded({ extended: true }));
+
+const db = require("./src/models");
+db.sequelize.sync()
+  .then(() => {
+    console.log("Synced db.");
+  })
+  .catch((err) => {
+    console.log("Failed to sync db: " + err.message);
+  });
+
 initRoutes(app);
 let port = 8080;
 app.listen(port, () => {
