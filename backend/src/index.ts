@@ -3,6 +3,8 @@ import express from "express";
 import initRoutes from "./routes";
 import db from "./models";
 
+require("dotenv").config();
+
 const app = express();
 // global.__basedir = __dirname;
 var corsOptions = {
