@@ -11,10 +11,12 @@ export async function getFiles(): Promise<FileModel[]> {
 }
 
 export async function createFile(
-  newFile: Buffer
-): Promise<File> {
-  const response = await Axios.post(`${apiEndpoint}/files`,)
-  return response.data.item
+  newFile: Blob
+): Promise<FileModel> {
+  const form = new FormData()
+  form.append("file", newFile)
+  const response = await Axios.post(`${apiEndpoint}/files`, form)
+  return response.data
 }
 
 

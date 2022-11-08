@@ -1,5 +1,5 @@
-import { History } from 'history'
 import * as React from 'react'
+import { Link } from 'react-router-dom'
 import {
   Button,
   Divider,
@@ -12,52 +12,30 @@ import {
 import { deleteFile, getFiles } from '../api/files-api'
 import { FileModel } from '../types/FileModel'
 
-interface FilesProps {
-  history: History
-}
 
 interface FilesState {
   files: FileModel[]
   loading: boolean
 }
 
-export class Files extends React.PureComponent<FilesProps,FilesState> {
+export class Files extends React.PureComponent<FilesState> {
   state: FilesState = {
     files: [],    
     loading: true
   }
 
-//   handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-//     this.setState({ newTodoName: event.target.value })
-//   }
-
   onAddButtonClick = () => {
-    this.props.history.push(`/files/add`)
   }
 
-//   onTodoCreate = async (event: React.ChangeEvent<HTMLButtonElement>) => {
-//     try {
-//       const newTodo = await createFile(this.props.auth.getIdToken(), {
-//         name: this.state.newTodoName,
-//         dueDate
-//       })
-//       this.setState({
-//         todos: [...this.state.todos, newTodo],
-//         newTodoName: ''
-//       })
-//     } catch {
-//       alert('Todo creation failed')
-//     }
-//   }
 
-  onTodoDelete = async (id: string) => {
+  onFileDelete = async (id: string) => {
     try {
       await deleteFile(id)
       this.setState({
         files: this.state.files.filter(file => file.id !== id)
       })
     } catch {
-      alert('Todo deletion failed')
+      alert('File deletion failed')
     }
   }
 
@@ -92,12 +70,10 @@ export class Files extends React.PureComponent<FilesProps,FilesState> {
     return (
       <Grid.Row>
         <Grid.Column width={16}>
-          <Button            
-            fluid
-            actionPosition="left"
-            onClick={()=>this.onAddButtonClick}
-            label = "New file"
-          />
+          <Link            
+            to={'files/add'}>
+            <Icon name="add" />
+          </Link>
         </Grid.Column>
         <Grid.Column width={16}>
           <Divider />
@@ -144,7 +120,7 @@ export class Files extends React.PureComponent<FilesProps,FilesState> {
                 <Button
                   icon
                   color="red"
-                  onClick={() => this.onTodoDelete(file.id)}
+                  onClick={() => this.onFileDelete(file.id)}
                 >
                   <Icon name="delete" />
                 </Button>

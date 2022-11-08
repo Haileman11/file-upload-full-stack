@@ -10,19 +10,12 @@ enum UploadState {
 
 
 
-interface CreateFileProps {
-  history: History
-}
-
 interface CreateFileState {
   file: any
   uploadState: UploadState
 }
 
-export class CreateFile extends React.PureComponent<
-  CreateFileProps,
-  CreateFileState
-> {
+export class CreateFile extends React.PureComponent<CreateFileState> {
   state: CreateFileState = {
     file: undefined,
     uploadState: UploadState.NoUpload
@@ -72,9 +65,8 @@ export class CreateFile extends React.PureComponent<
           <Form.Field>
             <label>File</label>
             <input
-              type="file"
-              accept="image/*"
-              placeholder="Image to upload"
+              type="file"              
+              placeholder="File to upload"
               onChange={this.handleFileChange}
             />
           </Form.Field>

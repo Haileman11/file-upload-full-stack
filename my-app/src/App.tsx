@@ -1,19 +1,17 @@
 import React, { Component } from 'react'
-import { Link, Route, Router, Switch } from 'react-router-dom'
+import { BrowserRouter, Link, Route, Routes, } from 'react-router-dom'
 import { Grid, Menu, Segment } from 'semantic-ui-react'
 import { CreateFile } from './components/CreateFile'
 
 import { Files } from './components/FilesComponent'
 
-export interface AppProps {}
-
-export interface AppProps {
-  history: any
-}
-
 export interface AppState {}
-
-export default class App extends Component<AppProps, AppState> {  
+enum UploadState {
+  NoUpload,
+  FetchingPresignedUrl,
+  UploadingFile,
+}
+export default class App extends Component< AppState> {  
 
   render() {
     return (
@@ -22,11 +20,11 @@ export default class App extends Component<AppProps, AppState> {
           <Grid container stackable verticalAlign="middle">
             <Grid.Row>
               <Grid.Column width={16}>
-                <Router history={this.props.history}>
+                <BrowserRouter >
                   {this.generateMenu()}
 
                   {this.generateCurrentPage()}
-                </Router>
+                </BrowserRouter>
               </Grid.Column>
             </Grid.Row>
           </Grid>
@@ -49,24 +47,18 @@ export default class App extends Component<AppProps, AppState> {
   generateCurrentPage() {    
 
     return (
-      <Switch>
+      <Routes>
         <Route
-          path="/"
-          exact
-          render={props => {
-            return <Files {...props} />
-          }}
+          path="/"          
+          element={<Files loading={false} files={[]}/>
+          }
         />
-
         <Route
           path="/files/add"
-          exact
-          render={props => {
-            return <CreateFile {...props}  />
-          }}
+          element={<CreateFile file={undefined} uploadState={UploadState.NoUpload} />
+          }
         />
-
-      </Switch>
+      </Routes>
     )
   }
 }
