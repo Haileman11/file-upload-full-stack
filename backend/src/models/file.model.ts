@@ -1,4 +1,4 @@
-module.exports = (sequelize, Sequelize) => {
+const initFileModel=  (sequelize: any, Sequelize:any ) => {
     const FileModel = sequelize.define("file", {
       filename: {
         type: Sequelize.STRING
@@ -9,4 +9,5 @@ module.exports = (sequelize, Sequelize) => {
     });
   
     return FileModel;
-  };
+};
+export default initFileModel

@@ -1,21 +1,22 @@
-const cors = require("cors");
-const express = require("express");
+import cors from "cors";
+import express from "express";
+import initRoutes from "./routes";
+import db from "./models";
 
 const app = express();
-global.__basedir = __dirname;
+// global.__basedir = __dirname;
 var corsOptions = {
   origin: "*"
 };
 app.use(cors(corsOptions));
-const initRoutes = require("./src/routes");
 app.use(express.urlencoded({ extended: true }));
 
-const db = require("./src/models");
+
 db.sequelize.sync()
   .then(() => {
     console.log("Synced db.");
   })
-  .catch((err) => {
+  .catch((err: Error) => {
     console.log("Failed to sync db: " + err.message);
   });
 
