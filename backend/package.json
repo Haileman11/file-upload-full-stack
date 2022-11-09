@@ -1,12 +1,12 @@
 {
-  "type": "module",
   "name": "file-upload-api",
   "version": "1.0.0",
   "description": "API for file-upload",
-  "main": "./src/index.ts",
+  "main": "./src/server.ts",
   "scripts": {
-    "dev": "nodemon src/index.ts",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "nodemon src/server.ts",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "ts-node-esm ./src/server.ts"
   },
   "author": "Hailegabriel Mekonnen",
   "license": "ISC",
