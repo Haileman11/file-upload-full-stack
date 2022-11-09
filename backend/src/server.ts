@@ -23,7 +23,7 @@ db.sequelize.sync()
   });
 
 initRoutes(app);
-let port = 8080;
+let port = 8000;
 app.listen(port, () => {
   console.log(`Running at localhost:${port}`);
 });
